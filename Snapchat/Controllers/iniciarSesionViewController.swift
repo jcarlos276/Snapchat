@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import Firebase
 import SVProgressHUD
 
 class iniciarSesionViewController: UIViewController {
@@ -17,7 +18,7 @@ class iniciarSesionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        configureContent()
     }
 
     @IBAction func iniciarSesionTapped(_ sender: Any) {
@@ -25,7 +26,7 @@ class iniciarSesionViewController: UIViewController {
         Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextfield.text!) { (user, error) in
             SVProgressHUD.dismiss()
             if error != nil {
-                self.showAlertWithOptions(withMessage: "\(error!.localizedDescription)", withOkHandler: {
+                self.showAlertWithOptions(withMessage: "La cuenta con la que intentaste iniciar sesión no existe. ¿Deseas registrarte?", withOkHandler: {
                     self.createUser()
                 }, inViewController: self)
             } else {
@@ -35,11 +36,16 @@ class iniciarSesionViewController: UIViewController {
         }
     }
     
+    func configureContent() {
+        hideKeyboardWhenTappedAround()
+    }
+    
     func createUser() {
         Auth.auth().createUser(withEmail: self.emailTextField.text!, password: self.passwordTextfield.text!, completion: { (user, error) in
             if error != nil {
                 self.showAlertWithTitle(title: "Alerta", withMessage: "\(error!.localizedDescription)", inViewCont: self)
             } else {
+                Database.database().reference().child("usuarios").child(user!.uid).child("email").setValue(user!.email)
                 SVProgressHUD.showSuccess(withStatus: "Fuiste registrado exitosamente")
                 self.performSegue(withIdentifier: "iniciarSesionSegue", sender: nil)
             }
