@@ -19,6 +19,8 @@ class iniciarSesionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureContent()
+        emailTextField.text = "juan.cgc276@gmail.com"
+        passwordTextfield.text = "qqqqqqqq"
     }
 
     @IBAction func iniciarSesionTapped(_ sender: Any) {
@@ -38,6 +40,8 @@ class iniciarSesionViewController: UIViewController {
     
     func configureContent() {
         hideKeyboardWhenTappedAround()
+        emailTextField.delegate = self
+        passwordTextfield.delegate = self
     }
     
     func createUser() {
@@ -52,5 +56,19 @@ class iniciarSesionViewController: UIViewController {
         })
     }
     
+}
+
+
+//MARK: - UITextFieldDelegate
+extension iniciarSesionViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.returnKeyType == .next {
+            passwordTextfield.becomeFirstResponder()
+        }
+        if textField.returnKeyType == .go {
+            iniciarSesionTapped("")
+        }
+        return true
+    }
 }
 

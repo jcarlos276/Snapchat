@@ -21,7 +21,7 @@ class SonidoViewController: UIViewController {
     var audioLocalURL: URL?
     
     var sonidoUrl = ""
-    var isPlaying = false
+    var hasRecorded = false
     
     var sonidoID = NSUUID().uuidString
 
@@ -30,8 +30,19 @@ class SonidoViewController: UIViewController {
         configureContent()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "seleccionarContactoSegue" {
+            let vc = segue.destination as! ElegirUsuarioViewController
+            vc.sonidoURL = sender as! String
+            vc.snapDescription = snapDescription.text!
+            vc.sonidoID = sonidoID
+        }
+    }
+    
     func configureContent() {
+        hideKeyboardWhenTappedAround()
         setupRecorder()
+        chooseContactButton.layer.cornerRadius = 12.5
     }
     
     func setupRecorder() {
@@ -70,37 +81,22 @@ class SonidoViewController: UIViewController {
             //Detener la grabación
             audioRecorder?.stop()
             //Cambiar el texto del botón grabar
-            playButton.setImage(#imageLiteral(resourceName: "Icon_3-512"), for: .normal)
+            playButton.setImage(#imageLiteral(resourceName: "microphone"), for: .normal)
             playButton.isEnabled = true
         } else {
             //Empezar a grabar
             audioRecorder?.record()
             //Cambiar el titulo del botón a detener
             playButton.setImage(#imageLiteral(resourceName: "Button-Stop-512"), for: .normal)
+            hasRecorded = true
         }
-    }
-    
-    @IBAction func playTapped(_ sender: UIButton) {
-        do {
-            if audioPlayer == nil {
-                try audioPlayer = AVAudioPlayer(contentsOf: audioLocalURL!)
-                audioPlayer?.delegate = self
-            }
-            if !(audioPlayer!.isPlaying) {
-                audioPlayer!.play()
-                playButton.setTitle("Pause", for: .normal)
-            } else {
-                audioPlayer!.pause()
-                playButton.setTitle("Play", for: .normal)
-            }
-        } catch {}
     }
     
     @IBAction func chooseContactTapped(_ sender: Any) {
         let folderSounds = Storage.storage().reference().child("sonidos")
         let soundData = NSData(contentsOf: audioLocalURL!) as Data?
         
-        if soundData == nil {
+        if !hasRecorded {
             showAlertWithTitle(title: "Alerta", withMessage: "Grabe un audio para subir", inViewCont: self)
             return
         }
@@ -122,6 +118,7 @@ class SonidoViewController: UIViewController {
                 } else {
                     SVProgressHUD.dismiss()
                     self.sonidoUrl = (metadata?.downloadURL()!.absoluteString)!
+                    print(self.sonidoUrl)
                     self.performSegue(withIdentifier: "seleccionarContactoSegue", sender: self.sonidoUrl)
                 }
             }

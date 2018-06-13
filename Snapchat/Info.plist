@@ -2,10 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Necesitamos grabar un audio para registrar tu snap</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Necesitamos que subas una foto tuya para registrarla</string>
+	<string>Necesitamos grabar una foto para registrar tu snap</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Necesitamos que selecciones una imágen para registrarla</string>
+	<string>Necesitamos grabar una imagen para registrar tu snap</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

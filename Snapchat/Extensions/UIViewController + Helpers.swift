@@ -33,6 +33,19 @@ extension UIViewController {
         view.addGestureRecognizer(tap)
     }
     
+    func downloadFileFromURL(url:URL, failureResponse failure: @escaping(Error) -> Void, successResponse success: @escaping(URL) -> Void) {
+        var downloadTask:URLSessionDownloadTask
+        downloadTask = URLSession.shared.downloadTask(with: url, completionHandler: { (URL, response, error) in
+            if error != nil {
+                failure(error!)
+            } else {
+                success(URL!)
+            }
+        })
+        
+        downloadTask.resume()
+    }
+    
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }

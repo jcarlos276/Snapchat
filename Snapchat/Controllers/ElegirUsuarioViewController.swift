@@ -15,8 +15,10 @@ class ElegirUsuarioViewController: UIViewController {
     
     var usuarios: [Usuario] = []
     var imagenURL = ""
+    var sonidoURL = ""
     var snapDescription = ""
     var imagenID = ""
+    var sonidoID = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +45,12 @@ class ElegirUsuarioViewController: UIViewController {
     @IBAction func sendSnaps(_ sender: Any) {
         for indexPath in tableView.indexPathsForSelectedRows! {
             let usuario = usuarios[indexPath.row]
-            let snap = ["imagenID":imagenID, "from": Auth.auth().currentUser!.email, "descripcion": snapDescription, "imagenURL": imagenURL]
+            var snap: [String: String?] = [:]
+            if imagenID != "" {
+                snap = ["imagenID":imagenID, "from": Auth.auth().currentUser!.email, "descripcion": snapDescription, "imagenURL": imagenURL]
+            } else {
+                snap = ["sonidoID":sonidoID, "from": Auth.auth().currentUser!.email, "descripcion": snapDescription, "sonidoURL": sonidoURL]
+            }
             Database.database().reference().child("usuarios").child(usuario.uid).child("snaps").childByAutoId().setValue(snap)
             navigationController?.popToRootViewController(animated: true)
         }

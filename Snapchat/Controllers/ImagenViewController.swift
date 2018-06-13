@@ -26,13 +26,7 @@ class ImagenViewController: UIViewController {
     }
     
     @IBAction func cammeraTapped(_ sender: Any) {
-//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            /*try!*/ imagePicker.sourceType = .savedPhotosAlbum
-            imagePicker.allowsEditing = false
-            present(imagePicker, animated: true, completion: nil)
-//        } else {
-//            showAlertWithTitle(title: "Alerta", withMessage: "La cámara no está disponible en este dispositivo", inViewCont: self)
-//        }
+        showOptionsOfImage()
     }
     
     @IBAction func chooseContactTapped(_ sender: Any) {
@@ -77,6 +71,38 @@ class ImagenViewController: UIViewController {
     func configureContent() {
         imagePicker.delegate = self
         hideKeyboardWhenTappedAround()
+        chooseContactButton.layer.cornerRadius = 12.5
+    }
+    
+    func showOptionsOfImage() {
+        let actionsheet = UIAlertController(title: "Desea subir imágenes desde ...", message: nil, preferredStyle: .actionSheet)
+        let selectGallery = UIAlertAction(title: "Galeria 🖼", style: .default) { (_) in
+            self.selectFromGallery()
+        }
+        let takePhoto = UIAlertAction(title: "Cámara 📷", style: .default) { (_) in
+            self.takePhoto()
+        }
+        let cancel = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
+        actionsheet.addAction(selectGallery)
+        actionsheet.addAction(takePhoto)
+        actionsheet.addAction(cancel)
+        present(actionsheet, animated: true, completion: nil)
+    }
+    
+    func selectFromGallery() {
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = false
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func takePhoto() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            try! imagePicker.sourceType = .camera
+            imagePicker.allowsEditing = false
+            present(imagePicker, animated: true, completion: nil)
+        } else {
+            showAlertWithTitle(title: "Alerta", withMessage: "La cámara no está disponible en este dispositivo", inViewCont: self)
+        }
     }
 
 }

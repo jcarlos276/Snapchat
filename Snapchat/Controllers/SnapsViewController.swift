@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SVProgressHUD
 
 class SnapsViewController: UIViewController {
     
@@ -45,17 +46,30 @@ class SnapsViewController: UIViewController {
         } else {
             messageLbl.isHidden = true
         }
-        tableViewHeight.constant = CGFloat(snaps.count*50)
+        tableViewHeight.constant = CGFloat(snaps.count*100)
     }
     
     func loadContent() {
+        
+        SVProgressHUD.show(withStatus: "Cargando Snaps")
         Database.database().reference().child("usuarios").child(Auth.auth().currentUser!.uid).child("snaps").observe(DataEventType.childAdded) { (snapshot) in
+            SVProgressHUD.dismiss()
             let snap = Snap()
-            snap.imagenURL = (snapshot.value as! Dictionary<String, Any>)["imagenURL"] as! String
+            
+            if let imagenURL = (snapshot.value as! Dictionary<String, Any>)["imagenURL"] as? String {
+                snap.dataURL = imagenURL
+                snap.dataID = (snapshot.value as! Dictionary<String, Any>)["imagenID"] as! String
+                snap.dataType = "image"
+            }
+            if let sonidoURL = (snapshot.value as! Dictionary<String, Any>)["sonidoURL"] as? String {
+                snap.dataURL = sonidoURL
+                snap.dataID = (snapshot.value as! Dictionary<String, Any>)["sonidoID"] as! String
+                snap.dataType = "audio"
+            }
             snap.from = (snapshot.value as! Dictionary<String, Any>)["from"] as! String
             snap.snapDescription = (snapshot.value as! Dictionary<String, Any>)["descripcion"] as! String
             snap.id = snapshot.key
-            snap.imagenID = (snapshot.value as! Dictionary<String, Any>)["imagenID"] as! String
+            
             self.snaps.append(snap)
             self.configureContent()
             self.tableView.reloadData()
@@ -77,16 +91,15 @@ class SnapsViewController: UIViewController {
 }
 
 extension SnapsViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
-    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return snaps.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SnapUserTableViewCell") as! SnapUserTableViewCell
         let snap = snaps[indexPath.row]
-        cell.textLabel?.text = snap.from
+        cell.username = snap.from
+        cell.isImage = snap.dataType == "image" ? true : false
+        cell.loadContent()
         return cell
     }
     
