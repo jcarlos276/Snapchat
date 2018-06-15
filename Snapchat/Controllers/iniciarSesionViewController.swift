@@ -19,29 +19,47 @@ class iniciarSesionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureContent()
-        emailTextField.text = "juan.cgc276@gmail.com"
-        passwordTextfield.text = "qqqqqqqq"
     }
 
     @IBAction func iniciarSesionTapped(_ sender: Any) {
-        SVProgressHUD.show(withStatus: "Iniciando sesión")
-        Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextfield.text!) { (user, error) in
-            SVProgressHUD.dismiss()
-            if error != nil {
-                self.showAlertWithOptions(withMessage: "La cuenta con la que intentaste iniciar sesión no existe. ¿Deseas registrarte?", withOkHandler: {
-                    self.createUser()
-                }, inViewController: self)
-            } else {
-                SVProgressHUD.showSuccess(withStatus: "Inicio de sesión exitoso")
-                self.performSegue(withIdentifier: "iniciarSesionSegue", sender: nil)
+        if validFields() {
+            SVProgressHUD.show(withStatus: "Iniciando sesión")
+            Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextfield.text!) { (user, error) in
+                SVProgressHUD.dismiss()
+                if error != nil {
+                    self.showAlertWithOptions(withMessage: "La cuenta con la que intentaste iniciar sesión no existe. ¿Deseas registrarte?", withOkHandler: {
+                        self.createUser()
+                    }, inViewController: self)
+                } else {
+                    SVProgressHUD.showSuccess(withStatus: "Inicio de sesión exitoso")
+                    self.performSegue(withIdentifier: "iniciarSesionSegue", sender: nil)
+                }
             }
         }
+    }
+    
+    func validFields() -> Bool {
+        if emailTextField.text == "" {
+            showAlertWithTitle(title: "Alerta", withMessage: "Por favor ingrese un correo", inViewCont: self)
+            return false
+        }
+        if !emailTextField.isValidEmail() {
+            showAlertWithTitle(title: "Alerta", withMessage: "Por favor ingrese un correo válido", inViewCont: self)
+            return false
+        }
+        if passwordTextfield.text == "" {
+            showAlertWithTitle(title: "Alerta", withMessage: "Por favor ingrese su contraseña", inViewCont: self)
+            return false
+        }
+        return true
     }
     
     func configureContent() {
         hideKeyboardWhenTappedAround()
         emailTextField.delegate = self
         passwordTextfield.delegate = self
+        emailTextField.setAttributedPlaceholder(with: "Email")
+        passwordTextfield.setAttributedPlaceholder(with: "Password")
     }
     
     func createUser() {

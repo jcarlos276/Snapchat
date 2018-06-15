@@ -72,6 +72,8 @@ class ImagenViewController: UIViewController {
         imagePicker.delegate = self
         hideKeyboardWhenTappedAround()
         chooseContactButton.layer.cornerRadius = 12.5
+        descriptionTextField.setAttributedPlaceholder(with: "Descripción")
+        imageView.layer.cornerRadius = 12.5
     }
     
     func showOptionsOfImage() {

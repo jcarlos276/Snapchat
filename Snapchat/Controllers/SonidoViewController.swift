@@ -43,6 +43,7 @@ class SonidoViewController: UIViewController {
         hideKeyboardWhenTappedAround()
         setupRecorder()
         chooseContactButton.layer.cornerRadius = 12.5
+        snapDescription.setAttributedPlaceholder(with: "Descripción")
     }
     
     func setupRecorder() {

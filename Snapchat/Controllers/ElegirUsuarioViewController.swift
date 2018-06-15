@@ -63,9 +63,18 @@ extension ElegirUsuarioViewController: UITableViewDelegate, UITableViewDataSourc
         return usuarios.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserTableViewCell") as! UserTableViewCell
         let usuario = usuarios[indexPath.row]
-        cell.textLabel?.text = usuario.email
+        cell.username = usuario.email
+        cell.loadContent()
         return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! UserTableViewCell
+        cell.setSelectedStyle()
+    }
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! UserTableViewCell
+        cell.setSelectedStyle()
     }
 }

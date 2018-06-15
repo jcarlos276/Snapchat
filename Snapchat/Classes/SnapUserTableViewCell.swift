@@ -19,10 +19,14 @@ class SnapUserTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
+        configureContent()
+    }
+    
+    func configureContent() {
+        containerView.layer.cornerRadius = 12.5
     }
     
     func loadContent() {
-        containerView.layer.cornerRadius = 12.5
         contactLbl.text = username.components(separatedBy: "@").first
         if isImage {
             typeEmoji.text = "🏞"

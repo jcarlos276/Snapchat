@@ -14,6 +14,8 @@
 		526ECD0B20BF6FF900C9D3C1 /* SonidoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526ECD0A20BF6FF900C9D3C1 /* SonidoViewController.swift */; };
 		527DABF920D1BF1D000EEA34 /* SnapUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527DABF820D1BF1D000EEA34 /* SnapUserTableViewCell.swift */; };
 		527DABFC20D1D6D9000EEA34 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527DABFB20D1D6D9000EEA34 /* RoundedButton.swift */; };
+		527DAC0020D1DDF1000EEA34 /* UITextField + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527DABFF20D1DDF1000EEA34 /* UITextField + Helpers.swift */; };
+		527DAC0220D1F6F9000EEA34 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527DAC0120D1F6F9000EEA34 /* UserTableViewCell.swift */; };
 		52AEEDEE20ACE0B1004D5798 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52AEEDED20ACE0B1004D5798 /* GoogleService-Info.plist */; };
 		52AEEDF120ACE35D004D5798 /* UIViewController + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AEEDF020ACE35D004D5798 /* UIViewController + Helpers.swift */; };
 		52AEEDF520ACEB68004D5798 /* SnapsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AEEDF420ACEB68004D5798 /* SnapsViewController.swift */; };
@@ -34,6 +36,8 @@
 		526ECD0A20BF6FF900C9D3C1 /* SonidoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SonidoViewController.swift; sourceTree = "<group>"; };
 		527DABF820D1BF1D000EEA34 /* SnapUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapUserTableViewCell.swift; sourceTree = "<group>"; };
 		527DABFB20D1D6D9000EEA34 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		527DABFF20D1DDF1000EEA34 /* UITextField + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField + Helpers.swift"; sourceTree = "<group>"; };
+		527DAC0120D1F6F9000EEA34 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		52AEEDED20ACE0B1004D5798 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		52AEEDF020ACE35D004D5798 /* UIViewController + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Helpers.swift"; sourceTree = "<group>"; };
 		52AEEDF220ACEA9A004D5798 /* Snapchat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Snapchat.entitlements; sourceTree = "<group>"; };
@@ -84,6 +88,8 @@
 			isa = PBXGroup;
 			children = (
 				527DABFB20D1D6D9000EEA34 /* RoundedButton.swift */,
+				527DABF820D1BF1D000EEA34 /* SnapUserTableViewCell.swift */,
+				527DAC0120D1F6F9000EEA34 /* UserTableViewCell.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -92,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				52AEEDF020ACE35D004D5798 /* UIViewController + Helpers.swift */,
+				527DABFF20D1DDF1000EEA34 /* UITextField + Helpers.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -141,7 +148,6 @@
 				52BCB85E20ACD48B00F16B56 /* LaunchScreen.storyboard */,
 				52BCB86120ACD48B00F16B56 /* Info.plist */,
 				52AEEDED20ACE0B1004D5798 /* GoogleService-Info.plist */,
-				527DABF820D1BF1D000EEA34 /* SnapUserTableViewCell.swift */,
 			);
 			path = Snapchat;
 			sourceTree = "<group>";
@@ -285,9 +291,11 @@
 			files = (
 				52AEEDF520ACEB68004D5798 /* SnapsViewController.swift in Sources */,
 				527DABF920D1BF1D000EEA34 /* SnapUserTableViewCell.swift in Sources */,
+				527DAC0220D1F6F9000EEA34 /* UserTableViewCell.swift in Sources */,
 				5265B8DB20AD2622004223FD /* ImagenViewController.swift in Sources */,
 				526ECD0120BF2F9F00C9D3C1 /* Usuario.swift in Sources */,
 				52BCB85820ACD48800F16B56 /* iniciarSesionViewController.swift in Sources */,
+				527DAC0020D1DDF1000EEA34 /* UITextField + Helpers.swift in Sources */,
 				526ECD0720BF480500C9D3C1 /* VerSnapViewController.swift in Sources */,
 				52BCB85620ACD48800F16B56 /* AppDelegate.swift in Sources */,
 				527DABFC20D1D6D9000EEA34 /* RoundedButton.swift in Sources */,

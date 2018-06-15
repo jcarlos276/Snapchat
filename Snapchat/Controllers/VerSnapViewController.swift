@@ -30,12 +30,12 @@ class VerSnapViewController: UIViewController {
         loadContent()
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        Database.database().reference().child("usuarios").child(Auth.auth().currentUser!.uid).child("snaps").child(snap.id).removeValue()
-//        Storage.storage().reference().child("imagenes").child("\(snap.dataID).jpg").delete { (error) in
-//            print("Se eliminó la imagen correctamente")
-//        }
-//    }
+    override func viewWillDisappear(_ animated: Bool) {
+        Database.database().reference().child("usuarios").child(Auth.auth().currentUser!.uid).child("snaps").child(snap.id).removeValue()
+        Storage.storage().reference().child("imagenes").child("\(snap.dataID).jpg").delete { (error) in
+            print("Se eliminó la imagen correctamente")
+        }
+    }
     
     func loadContent() {
         if snap.dataType == "image" {
@@ -47,14 +47,12 @@ class VerSnapViewController: UIViewController {
         } else {
             let urlstring = snap.dataURL
             let url = URL(string: urlstring)!
-            downloadResource(url: url) {
-                self.play(url: self.destinationUrl!)
-            }
+            downloadResource(url: url)
         }
         descriptionLabel.text = snap.snapDescription
     }
     
-    func downloadResource(url: URL, completion: @escaping() -> ()) {
+    func downloadResource(url: URL) {
         SVProgressHUD.show(withStatus: "Cargando audio")
         URLSession.shared.downloadTask(with: url, completionHandler: { (location, response, error) -> Void in
             SVProgressHUD.dismiss()
@@ -63,7 +61,6 @@ class VerSnapViewController: UIViewController {
                 let documentsDirectoryURL =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
                 self.destinationUrl = documentsDirectoryURL.appendingPathComponent(self.snap.dataID)
                 try FileManager.default.moveItem(at: location, to: self.destinationUrl!)
-                completion()
                 print("File moved to documents folder")
             } catch let error as NSError {
                 print(error.localizedDescription)
